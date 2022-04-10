@@ -11,14 +11,16 @@
 }
 else
 {
-  <h4>FLavors this treat has:</h4>
+  <h4>Flavors this treat has:</h4>
   <ul>
   @foreach(var join in Model.JoinEntities)
   {
-    <li>@join.Treat.Name</li>
+    <li>@join.Flavor.Name</li>
   }
   </ul>
 }
+
+<p>@Html.ActionLink("Add a flavor", "AddFlavor", new { id = Model.TreatId })</p>
 
 <p>@Html.ActionLink("Back to treats", "Index")</p>
 <p>@Html.ActionLink("Edit treat", "Edit", new { id = Model.TreatId })</p>

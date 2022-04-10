@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Bakery.Models;
@@ -53,6 +54,25 @@ namespace Bakery.Controllers
     {
       _db.Entry(treat).State = EntityState.Modified;
       _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult AddFlavor(int id)
+    {
+      var thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
+      ViewBag.FlavorId = new SelectList(_db.Flavors, "FlavorId", "Name");
+      return View(thisTreat);
+    }
+
+    [HttpPost]
+    public ActionResult AddFlavor(Treat treat, int FlavorId)
+    {
+      bool duplicate = _db.FlavorTreat.Any(join => join.FlavorId == FlavorId && join.TreatId == treat.TreatId);
+      if (FlavorId != 0 && !duplicate)
+      {
+        _db.FlavorTreat.Add(new FlavorTreat() { FlavorId = FlavorId, TreatId = treat.TreatId });
+        _db.SaveChanges();
+      }
       return RedirectToAction("Index");
     }
 
