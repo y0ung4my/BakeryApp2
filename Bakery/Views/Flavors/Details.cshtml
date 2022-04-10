@@ -7,11 +7,11 @@
 
 @if(@Model.JoinEntities.Count == 0)
 {
-  <p>This flavor is not available for any treats</p>
+  <p>This flavor is not in any treats</p>
 }
 else
 {
-  <h4>Treats this flavor can be added to:</h4>
+  <h4>Treats this flavor is available in:</h4>
   <ul>
   @foreach(var join in Model.JoinEntities)
   {
@@ -19,6 +19,8 @@ else
   }
   </ul>
 }
+
+<p>@Html.ActionLink("Add a treat", "AddTreat", new { id = Model.FlavorId })</p>
 
 <p>@Html.ActionLink("Back to flavors", "Index")</p>
 <p>@Html.ActionLink("Edit flavor", "Edit", new { id = Model.FlavorId })</p>
